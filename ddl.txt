@@ -1,0 +1,87 @@
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account` varchar(15) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `password` varchar(16) NOT NULL,
+  `unit` varchar(20) DEFAULT '',
+  `state` int(11) NOT NULL DEFAULT '0',
+  `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `account` (`account`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `user_relation` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `stu_id` int(11) NOT NULL,
+  `tea_id` int(11) NOT NULL,
+  `createtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `tea_id` (`tea_id`),
+  KEY `stu_id` (`stu_id`),
+  CONSTRAINT `user_relation_ibfk_1` FOREIGN KEY (`stu_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `user_relation_ibfk_2` FOREIGN KEY (`tea_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `project` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `dateline` date DEFAULT NULL,
+  `uid` int(11) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`),
+  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `project_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `pid` (`pid`),
+  KEY `uid` (`uid`),
+  CONSTRAINT `project_user_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `project` (`id`),
+  CONSTRAINT `project_user_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `module` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `pid` int(11) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `filetype` varchar(255) NOT NULL DEFAULT '[doc,docx]',
+  `attachtype` varchar(255) NOT NULL DEFAULT 'zip',
+  `dateline` date NOT NULL,
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `code` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pid` (`pid`),
+  CONSTRAINT `module_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `project` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
