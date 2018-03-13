@@ -1,7 +1,0 @@
-segmenter\scut\service\WordSegmenterQueue.class
-segmenter\scut\config\AnsjConfig.class
-segmenter\scut\pojo\RequestResult.class
-segmenter\scut\service\WordSegmenterThread.class
-segmenter\scut\Application.class
-segmenter\scut\controller\WordSegmenterController.class
-segmenter\scut\monitor\QueueMonitor.class
