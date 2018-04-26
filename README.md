@@ -1,6 +1,6 @@
 # scut_doc
-<h1>中文文本管理与查重系统</h1>
-<p>该系统是使用springboot和一点点springcloud的知识搭建的微服务架构，主要分为三个模块：web、word、similarity。</p>
+<h1>文档管理与查重系统</h1>
+<p>该系统主要提供给某个老师检测学生doc作业相似度、重复率的，它既能管理文档，也能查重。该系统是使用springboot和一点点springcloud的知识搭建的微服务架构，主要分为三个模块：web、word、similarity。</p>
 <br>
 <h1>一、模块介绍：</h1>
 <h2>1、web模块</h2>
